@@ -1,7 +1,7 @@
 [
   {
     "query": "byArtistId",
-    "timeout": 30,
+    "timeout": 5,
     "warmup_duration": 300,
     "duration": 60,
     "candidates": [
@@ -60,7 +60,7 @@
   },
   {
     "query": "albums_tracks_genre_some",
-    "timeout": 30,
+    "timeout": 5,
     "warmup_duration": 300,
     "duration": 60,
     "candidates": [
@@ -119,7 +119,7 @@
   },
   {
     "query": "albums_tracks_genre_all",
-    "timeout": 30,
+    "timeout": 5,
     "warmup_duration": 300,
     "duration": 60,
     "candidates": [
@@ -178,7 +178,7 @@
   },
   {
     "query": "prisma_deeplyNested",
-    "timeout": 30,
+    "timeout": 5,
     "warmup_duration": 300,
     "duration": 60,
     "candidates": [
