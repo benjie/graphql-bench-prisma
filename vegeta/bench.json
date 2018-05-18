@@ -1,0 +1,50 @@
+[
+  {
+    "query": "tracks_media_first_20",
+    "timeout": 1,
+    "warmup_duration": 100,
+    "duration": 40,
+    "candidates": [
+      {
+        "dir": "postgraphile",
+        "url": "http://localhost:5000/graphql"
+      }
+    ],
+    "rps": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      650,
+      700,
+      750,
+      800
+    ]
+  },
+  {
+    "query": "tracks_media_first_20",
+    "timeout": 1,
+    "warmup_duration": 100,
+    "duration": 40,
+    "candidates": [
+      {
+        "dir": "prisma",
+        "url": "http://localhost:4466"
+      }
+    ],
+    "rps": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      650,
+      700,
+      750,
+      800
+    ]
+  }
+]
