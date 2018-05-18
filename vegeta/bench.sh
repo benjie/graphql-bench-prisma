@@ -44,6 +44,7 @@ bench_query() {
 
         local PROGRAM_DIR="$(echo $CANDIDATE | jq -rc '.dir')"
         local PROGRAM_URL="$(echo $CANDIDATE | jq -rc '.url')"
+        ../testcandidates/$PROGRAM_DIR/start
         mkdir     "../testcandidates/$PROGRAM_DIR/results/$BENCH_FOLDER/"
         cp bench.json "../testcandidates/$PROGRAM_DIR/results/$BENCH_FOLDER/"
 
@@ -69,6 +70,7 @@ bench_query() {
             sleep 15
 
         done
+        ../testcandidates/$PROGRAM_DIR/stop
     done
 }
 
