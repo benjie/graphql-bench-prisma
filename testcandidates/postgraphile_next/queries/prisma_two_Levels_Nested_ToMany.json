@@ -1,0 +1,1 @@
+{"query":"query twoLevelsNestedToMany {\n  allArtistsList(condition: {artistId: 3}) {\n    name\n    albumsByArtistIdList {\n      title\n      tracksByAlbumIdList {\n        name\n        composer\n      }\n    }\n  }\n}\n","variables":null,"operationName":"twoLevelsNestedToMany"}
