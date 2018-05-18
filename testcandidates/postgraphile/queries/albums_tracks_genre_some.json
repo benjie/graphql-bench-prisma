@@ -1,0 +1,1 @@
+{"operationName":"albums_tracks_genre_some","variables":{},"query":"query albums_tracks_genre_some {\n  allAlbums(condition: {artistId: 127}) {\n    nodes {\n      artistId\n      title\n      tracksByAlbumId {\n        nodes {\n          trackId\n          name\n          genreByGenreId {\n            name\n          }\n        }\n      }\n    }\n  }\n}"}

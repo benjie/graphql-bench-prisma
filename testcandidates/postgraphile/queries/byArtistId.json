@@ -1,0 +1,1 @@
+{"operationName":"artistByArtistId","variables":{},"query":"query  artistByArtistId {\n  artistByArtistId(artistId: 3) {\n      artistId\n      name\n  }\n}"}
