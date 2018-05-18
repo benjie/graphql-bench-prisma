@@ -1,0 +1,2 @@
+{"query":"query oneLevelNestedToMany {\n  artistByArtistId(artistId: 3) {\n    name\n    albumsByArtistId {\n      nodes {\n        title\n      }\n    }\n  }\n}\n","variables":null,"operationName":"oneLevelNestedToMany"}
+

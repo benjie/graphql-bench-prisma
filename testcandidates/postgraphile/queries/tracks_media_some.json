@@ -1,0 +1,1 @@
+{"query":"query tracks_media_some {\n  allTracks(condition: {composer: \"Kurt Cobain\"}) {\n    nodes {\n      trackId\n      name\n      albumByAlbumId {\n        albumId\n        title\n      }\n      mediaTypeByMediaTypeId {\n        name\n      }\n    }\n  }\n}\n","variables":null,"operationName":"tracks_media_some"}
