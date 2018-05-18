@@ -1,9 +1,9 @@
 [
   {
     "query": "tracks_media_first_20",
-    "timeout": 1,
-    "warmup_duration": 100,
-    "duration": 40,
+    "timeout": 30,
+    "warmup_duration": 300,
+    "duration": 180,
     "candidates": [
       {
         "dir": "postgraphile",
@@ -25,9 +25,9 @@
   },
   {
     "query": "tracks_media_first_20",
-    "timeout": 1,
-    "warmup_duration": 100,
-    "duration": 40,
+    "timeout": 30,
+    "warmup_duration": 300,
+    "duration": 180,
     "candidates": [
       {
         "dir": "prisma",

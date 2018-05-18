@@ -52,6 +52,9 @@ bench_query() {
             echo ""
             run_vegeta "$PROGRAM_URL" "$PROGRAM_DIR" "$QUERY_NAME" 100 "$WARMUP_DURATION" "temp/tmp.warmup" "$TIMEOUT"
             rm "temp/tmp.warmup"
+
+            # Give the service a moment to recover before the first attack starts
+            sleep 15
         fi
 
         for RPS in $RPS_ARRAY;do
