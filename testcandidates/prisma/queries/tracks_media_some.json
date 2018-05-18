@@ -1,0 +1,1 @@
+{"operationName":"tracks_media_some","variables":{},"query":"query tracks_media_some {\n  tracks(where: {Composer :\"Kurt Cobain\"}) {\n    TrackId\n    Name\n    Album {\n      AlbumId\n      Title\n    }\n    MediaType {\n      Name\n    }\n  }\n}"}

@@ -1,0 +1,1 @@
+{"operationName":"albums_tracks_genre_all","variables":{},"query":"query  albums_tracks_genre_all {\n  albums {\n    AlbumId\n    Title\n    Tracks {\n      TrackId\n      Name\n      Genre {\n        Name\n      }\n    }\n  }\n}"}

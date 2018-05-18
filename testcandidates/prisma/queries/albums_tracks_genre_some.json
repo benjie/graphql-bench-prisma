@@ -1,0 +1,1 @@
+{"operationName":"albums_tracks_genre_some","variables":{},"query":"query albums_tracks_genre_some {\n\talbums(where: {Artist: {ArtistId: 127}}) {\n    AlbumId\n    Title\n    Tracks {\n      TrackId\n      Name\n      Genre {\n        Name\n      }\n    }\n  }\n}"}

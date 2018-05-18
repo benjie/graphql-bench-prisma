@@ -1,0 +1,1 @@
+{"operationName":"oneLevelNestedToMany","variables":{},"query":"query oneLevelNestedToMany {\n  artist(where: {ArtistId: 3}) {\n    Name\n    Albums {\n      Title\n    }\n  }\n}"}
