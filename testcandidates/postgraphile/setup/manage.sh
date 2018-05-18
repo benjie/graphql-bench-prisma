@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+cd "$(dirname "$0")"
+
+set -e
+
 usage() {
     echo "Usage: $0 (init|start|nuke)"
 }
