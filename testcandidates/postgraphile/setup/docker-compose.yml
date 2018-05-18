@@ -1,0 +1,22 @@
+# Transient db - will lose it's data once restarted
+version: "3"
+services:
+  postgres:
+    image: postgres:10.3
+    container_name: psql
+    restart: always
+    command: postgres -c 'max_connections=500'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: unsecured
+      POSTGRES_DB: chinook
+    ports:
+      - "127.0.0.1:5432:5432"
+  postgraphile:
+    image: postgraphile:latest
+    container_name: postgraphile
+    restart: always
+    # PostGraphile uses the --max-pool-size setting *per worker*, so 100 * 4 = 400 connections
+    command: postgraphile -c 'postgres://postgres:unsecured@postgres:5432/chinook' --host 0.0.0.0 --port 5090 --max-pool-size 100 --cluster-workers "4"
+    ports:
+      - "127.0.0.1:5090:5090"
