@@ -1,0 +1,8 @@
+databases:
+  default:
+    connector: mysql
+    active: true
+    host: 172.26.0.2
+    port: 3306
+    user: root
+    password: prisma	
