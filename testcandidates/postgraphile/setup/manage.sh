@@ -15,6 +15,8 @@ init() {
     # Give PostgreSQL enough time to start
     sleep 30
     psql -1X -v ON_ERROR_STOP=1 'postgres://postgres:unsecured@localhost:5432/chinook' < ../import/chinook_import
+    docker-compose restart postgraphile
+    sleep 30
 }
 
 if [ "$#" -ne 1 ]; then
