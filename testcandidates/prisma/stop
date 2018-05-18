@@ -1,0 +1,5 @@
+cd "$(dirname "$0")"
+
+cd project
+
+docker-compose down -v --remove-orphans

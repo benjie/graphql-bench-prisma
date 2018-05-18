@@ -1,0 +1,11 @@
+cd "$(dirname "$0")"
+
+cd project
+
+docker-compose down -v --remove-orphans
+docker-compose up -d
+sleep 30
+prisma deploy
+prisma import --data ../import/chinook.zip
+echo "VERIFY THE FOLLOWING"
+cat ../queries/byArtistId.json | curl -X POST -d @- -H 'Content-Type: application/json' -i  http://localhost:4466
