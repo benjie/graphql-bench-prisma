@@ -110,20 +110,22 @@ You should receive a sensible result from the curl request - if you do - well do
 
 These instructions were based on the following instructions given to me by @do4gr, Prisma's engineer responsible for benchmarking:
 
-> The files are probably not in the correct folders for the script to work, sorry. I just set that one up by hand I think. This is what you need to do
-> Install the Prisma CLI `npm install -g prisma`
-> Setup a new project `prisma init`
-> Change the datamodel to the one in the datamodel.graphql file
-> Run `prisma deploy` and choose local
-> Then start the docker container
-> then run `prisma import --data chinook.zip` to import the data
-> then you can verify in the databrowser that there is data (edited)
+> The files are probably not in the correct folders for the script to work, sorry. I just set that one up by hand I think. This is what you need to do  
+> Install the Prisma CLI `npm install -g prisma`  
+> Setup a new project `prisma init`  
+> Change the datamodel to the one in the datamodel.graphql file  
+> Run `prisma deploy` and choose local  
+> Then start the docker container  
+> then run `prisma import --data chinook.zip` to import the data  
+> then you can verify in the databrowser that there is data (edited)  
 >
-> You then have a prisma instance running locally with that data. and in the bench.json can target it with 
+> You then have a prisma instance running locally with that data. and in the bench.json can target it with  
+> ```
 > {
 >     “dir”: “prisma”,
 >     “url”: “http://localhost:4466”
 > }
+> ```
 
 
 ### Run the benchmarks
