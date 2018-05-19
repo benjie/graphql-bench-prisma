@@ -103,7 +103,8 @@ init() {
 
     else
         for QUERY_PARAMS in $(echo "$BENCH_CONF" | jq -rc '.[]'); do
-            bench_query "$QUERY_PARAMS" "$BENCH_FOLDER"
+            local BENCH_FOLDER2="$(date '+%Y-%m-%d_%H:%M')"
+            bench_query "$QUERY_PARAMS" "$BENCH_FOLDER2"
         done
     fi
 }
