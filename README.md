@@ -128,7 +128,7 @@ These instructions were based on the following instructions given to me by @do4g
 > ```
 
 
-### Run the benchmarks
+## Run the benchmarks
 
 1. SSH into the box `ssh root@IP.ADDRESS.HERE`
 2. `cd graphql-bench-prisma/vegeta`
