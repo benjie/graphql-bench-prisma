@@ -12,6 +12,10 @@ services:
       POSTGRES_DB: chinook
     ports:
       - "127.0.0.1:5432:5432"
+    logging:
+      options:
+        max-size: 50m
+        max-file: "3"
   postgraphile:
     image: postgraphile:latest
     container_name: postgraphile
@@ -20,3 +24,7 @@ services:
     command: postgraphile -c 'postgres://postgres:unsecured@postgres:5432/chinook' --host 0.0.0.0 --port 5090 --max-pool-size 100 --cluster-workers "4"
     ports:
       - "127.0.0.1:5090:5090"
+    logging:
+      options:
+        max-size: 50m
+        max-file: "3"

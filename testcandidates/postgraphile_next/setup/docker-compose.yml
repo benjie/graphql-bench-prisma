@@ -12,6 +12,10 @@ services:
       POSTGRES_DB: chinook
     ports:
       - "127.0.0.1:6432:5432"
+    logging:
+      options:
+        max-size: 50m
+        max-file: "3"
   postgraphile_next:
     image: postgraphile_next:latest
     container_name: postgraphile_next
@@ -20,3 +24,7 @@ services:
     command: postgraphile -c 'postgres://postgres:unsecured@postgres_next:5432/chinook' --host 0.0.0.0 --port 5091 --max-pool-size 100 --cluster-workers "4" --disable-query-log --simple-collections both
     ports:
       - "127.0.0.1:5091:5091"
+    logging:
+      options:
+        max-size: 50m
+        max-file: "3"
