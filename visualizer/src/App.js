@@ -39,11 +39,11 @@ const makeOptions = (title, o) => {
 const formatMs = ms => ms ? ms.toFixed(0) : null;
 
 const CONFIG_BY_STAT = {
-  "latMean": makeOptions("Average latency", {yTransform: v => `${formatMs(v)}ms`}),
-  "lat50": makeOptions("50th Percentile Latency", {yTransform: v => `${formatMs(v)}ms`}),
-  "lat95": makeOptions("95th Percentile Latency", {yTransform: v => `${formatMs(v)}ms`}),
-  "lat99": makeOptions("99th Percentile Latency", {yTransform: v => `${formatMs(v)}ms`}),
-  "latMax": makeOptions("Maximum Latency", {yTransform: v => `${formatMs(v)}ms`}),
+  "latMean": makeOptions("Average latency", {high: 250, yTransform: v => `${formatMs(v)}ms`}),
+  "lat50": makeOptions("50th Percentile Latency", {high: 250, yTransform: v => `${formatMs(v)}ms`}),
+  "lat95": makeOptions("95th Percentile Latency", {high: 250, yTransform: v => `${formatMs(v)}ms`}),
+  "lat99": makeOptions("99th Percentile Latency", {high: 250, yTransform: v => `${formatMs(v)}ms`}),
+  "latMax": makeOptions("Maximum Latency", {high: 250, yTransform: v => `${formatMs(v)}ms`}),
   "success": makeOptions("Successful requests", {yTransform: v => `${v} successful requests`}),
   "failure": makeOptions("Failed requests", {yTransform: v => `${v} failed requests`}),
 };
@@ -54,13 +54,24 @@ class App extends Component {
   state = {
     query: QUERIES[0],
     stat: 'lat95',
+    smoothed: true,
+    sensibleLimits: true,
   };
 
   handleSetQuery = e => {
     this.setState({query: e.target.value});
   };
+
   handleSetStat = e => {
     this.setState({stat: e.target.value});
+  };
+
+  handleSetSmoothed = e => {
+    this.setState({smoothed: e.target.checked});
+  };
+
+  handleSetSensibleLimits = e => {
+    this.setState({sensibleLimits: e.target.checked});
   };
 
   render() {
@@ -89,7 +100,7 @@ class App extends Component {
         })
       )
     }
-    const {options: baseOptions, title, valueTransform} = CONFIG_BY_STAT[this.state.stat] || {};
+    const {options: baseOptions, title, valueTransform, high} = CONFIG_BY_STAT[this.state.stat] || {};
     const options = {
       ...baseOptions,
       axisX: {
@@ -98,6 +109,7 @@ class App extends Component {
         low: 0,
         high: rps[rps.length - 1],
       },
+      high: this.state.sensibleLimits ? high : undefined,
       chartPadding: {
         top: 20,
         right: 20,
@@ -105,7 +117,7 @@ class App extends Component {
         left: 40,
       },
       showArea: false,
-      lineSmooth: true,
+      lineSmooth: this.state.smoothed,
       showGridBackground: false,
       fullWidth: false,
       plugins: [
@@ -138,14 +150,20 @@ class App extends Component {
       <div className="App">
         <div style={{width: '100%', height: '4em', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', backgroundColor: 'rgba(0, 0, 0, 0.1)'}}>
           <div>
-            Query: <select value={this.state.query} onChange={this.handleSetQuery}>
-              {QUERIES.map(q => <option key={q} value={q}>{q}</option>)}
-            </select>
+            <div>
+              Query: <select value={this.state.query} onChange={this.handleSetQuery}>
+                {QUERIES.map(q => <option key={q} value={q}>{q}</option>)}
+              </select>
+            </div>
+            <div>
+              Stat: <select value={this.state.stat} onChange={this.handleSetStat}>
+                {ALL_STATS.map(q => <option key={q} value={q}>{CONFIG_BY_STAT[q].title}</option>)}
+              </select>
+            </div>
           </div>
           <div>
-            Stat: <select value={this.state.stat} onChange={this.handleSetStat}>
-              {ALL_STATS.map(q => <option key={q} value={q}>{CONFIG_BY_STAT[q].title}</option>)}
-            </select>
+            <div><label><input type='checkbox' checked={this.state.smoothed} onChange={this.handleSetSmoothed} /> Smoothed</label></div>
+            <div><label><input type='checkbox' checked={this.state.sensibleLimits} onChange={this.handleSetSensibleLimits} /> Zoom sensible region</label></div>
           </div>
           <div>
             <div className='label-postgraphile'>
