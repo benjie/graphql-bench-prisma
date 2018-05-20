@@ -18,8 +18,8 @@ function processValue(str) {
     return ms;
   } else if (str.match(/^([0-9]+(\.[0-9]+)?|\.[0-9]+)$/)) {
     return parseFloat(str);
-  } else if (str.match(/^([0-9]{3}\:[0-9]+ ?)+$/)) {
-    const results = str.split(' ');
+  } else if (str.match(/^([0-9]{3}\:[0-9]+ *)+$/)) {
+    const results = str.split(/ +/);
     const value = results.reduce(
       (memo, val) => {
         const [k,v] = val.split(':');
@@ -106,4 +106,31 @@ for (const candidate of testcandidates) {
 }
 
 const filteredData = allData.filter(r => r.startedAt.startsWith('2018-05-19'));
-console.log(filteredData);
+//console.log(filteredData);
+
+const digest = {};
+for (const entry of filteredData) {
+  /*
+  if (!digest[entry.query]) digest[entry.query] = {};
+  if (!digest[entry.query][entry.candidate]) digest[entry.query][entry.candidate] = {};
+  digest[entry.query][entry.candidate][entry.rps] = entry.Latencies['95'];
+  */
+  if (!digest[entry.query]) digest[entry.query] = [];
+  digest[entry.query].push({
+    software: entry.candidate,
+    rps: entry.rps,
+
+    // latency
+    latMean: entry.Latencies['mean'],
+    lat50: entry.Latencies['50'],
+    lat95: entry.Latencies['95'],
+    lat99: entry.Latencies['99'],
+    latMax: entry.Latencies['max'],
+
+    // Success
+    success: entry.StatusCodes['200'] || 0,
+    failure: entry.StatusCodes['000'] || 0,
+  });
+}
+fs.writeFileSync(`${__dirname}/../visualizer/data.json`, JSON.stringify(digest, null, 2));
+console.log("Data written");
