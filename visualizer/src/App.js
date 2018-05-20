@@ -10,7 +10,7 @@ import Chartist from 'chartist';
 import PluginTooltip from 'chartist-plugin-tooltip';
 import PluginAxisTitle from 'chartist-plugin-axistitle';
 
-const QUERIES = Object.keys(allData);
+const QUERIES = Object.keys(allData).sort();
 
 const makeOptions = (title, o) => {
   let valueTransform;
