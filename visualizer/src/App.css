@@ -31,3 +31,46 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.ct-line {
+  stroke-width: 5px;
+  /*stroke-dasharray: 10px 20px;*/
+}
+.ct-point {
+  stroke-width: 20px;
+  stroke-linecap: square;
+}
+
+.label-postgraphile,
+.series-postgraphile .ct-point,
+.series-postgraphile .ct-line {
+  stroke: red;
+  color: red;
+}
+
+.label-postgraphile-next,
+.series-postgraphile-next .ct-point,
+.series-postgraphile-next .ct-line {
+  stroke: green;
+  color: green;
+}
+
+.label-prisma,
+.series-prisma .ct-point,
+.series-prisma .ct-line {
+  stroke: blue;
+  color: blue;
+}
+
+.App .ct-label.ct-horizontal.ct-end {
+  transform: translate(-50%,0);
+  display: inline-block;
+  text-align: center;
+}
+.App .ct-label.ct-vertical.ct-start {
+  box-sizing: border-box;
+  transform: translate(0, 50%);
+  padding-top: calc(50% - 0.5em);
+  display: inline-block;
+  text-align: right;
+}
