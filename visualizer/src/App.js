@@ -144,7 +144,7 @@ class App extends Component {
           </div>
           <div>
             Stat: <select value={this.state.stat} onChange={this.handleSetStat}>
-              {ALL_STATS.map(q => <option key={q} value={q}>{q}</option>)}
+              {ALL_STATS.map(q => <option key={q} value={q}>{CONFIG_BY_STAT[q].title}</option>)}
             </select>
           </div>
           <div>
