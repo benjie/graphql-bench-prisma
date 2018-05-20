@@ -18,7 +18,7 @@ function processValue(str) {
     return ms;
   } else if (str.match(/^([0-9]+(\.[0-9]+)?|\.[0-9]+)$/)) {
     return parseFloat(str);
-  } else if (str.match(/^([0-9]{3}\:[0-9]+ *)+$/)) {
+  } else if (str.match(/^(([0-9]{3}|0)\:[0-9]+ *)+$/)) {
     const results = str.split(/ +/);
     const value = results.reduce(
       (memo, val) => {
@@ -129,8 +129,8 @@ for (const entry of filteredData) {
 
     // Success
     success: entry.StatusCodes['200'] || 0,
-    failure: entry.StatusCodes['000'] || 0,
+    failure: entry.StatusCodes['0'] || 0,
   });
 }
-fs.writeFileSync(`${__dirname}/../visualizer/data.json`, JSON.stringify(digest, null, 2));
+fs.writeFileSync(`${__dirname}/../visualizer/src/data.json`, JSON.stringify(digest, null, 2));
 console.log("Data written");
