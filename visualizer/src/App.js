@@ -39,11 +39,11 @@ const makeOptions = (title, o) => {
 const formatMs = ms => ms ? ms.toFixed(0) : null;
 
 const CONFIG_BY_STAT = {
-  "latMean": makeOptions("Average latency", {high: 250, yTransform: v => `${formatMs(v)}ms`}),
-  "lat50": makeOptions("50th Percentile Latency", {high: 250, yTransform: v => `${formatMs(v)}ms`}),
-  "lat95": makeOptions("95th Percentile Latency", {high: 250, yTransform: v => `${formatMs(v)}ms`}),
-  "lat99": makeOptions("99th Percentile Latency", {high: 250, yTransform: v => `${formatMs(v)}ms`}),
-  "latMax": makeOptions("Maximum Latency", {high: 250, yTransform: v => `${formatMs(v)}ms`}),
+  "latMean": makeOptions("Average latency", {high: 250, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "lat50": makeOptions("50th Percentile Latency", {high: 250, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "lat95": makeOptions("95th Percentile Latency", {high: 250, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "lat99": makeOptions("99th Percentile Latency", {high: 250, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "latMax": makeOptions("Maximum Latency", {high: 250, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
   "success": makeOptions("Successful requests", {yTransform: v => `${v} successful requests`}),
   "failure": makeOptions("Failed requests", {yTransform: v => `${v} failed requests`}),
 };
@@ -100,7 +100,7 @@ class App extends Component {
         })
       )
     }
-    const {options: baseOptions, title, valueTransform, high} = CONFIG_BY_STAT[this.state.stat] || {};
+    const {options: baseOptions, title, valueTransform, high, unit} = CONFIG_BY_STAT[this.state.stat] || {};
     const options = {
       ...baseOptions,
       axisX: {
@@ -134,7 +134,7 @@ class App extends Component {
             },
           },
           axisY: {
-            axisTitle: title || this.state.stat,
+            axisTitle: title ? unit ? `${title} (${unit})` : title : this.state.stat,
             textAnchor: 'middle',
             flipTitle: true,
             offset: {
