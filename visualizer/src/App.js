@@ -7,12 +7,24 @@ import allData from './data.json';
 import uniq from 'lodash/uniq';
 import groupBy from 'lodash/groupBy';
 import Chartist from 'chartist';
+import PluginTooltip from 'chartist-plugin-tooltip';
+import PluginAxisTitle from 'chartist-plugin-axistitle';
 
 const QUERIES = Object.keys(allData);
 
-const makeOptions = o => {
+const makeOptions = (title, o) => {
+  let valueTransform;
+  if (o.yTransform) {
+    valueTransform = v => {
+      const [x, y] = v.split(',');
+      return `${o.yTransform(parseFloat(y))} @ ${x} rps`;
+    }
+  }
+
   return {
     ...o,
+    valueTransform,
+    title,
     options: {
       ...o.options,
       axisX: {
@@ -23,14 +35,17 @@ const makeOptions = o => {
     }
   };
 }
+
+const formatMs = ms => ms ? ms.toFixed(0) : null;
+
 const CONFIG_BY_STAT = {
-  "latMean": makeOptions({}),
-  "lat50": makeOptions({}),
-  "lat95": makeOptions({}),
-  "lat99": makeOptions({}),
-  "latMax": makeOptions({}),
-  "success": makeOptions({}),
-  "failure": makeOptions({}),
+  "latMean": makeOptions("Average latency", {yTransform: v => `${formatMs(v)}ms`}),
+  "lat50": makeOptions("50th Percentile Latency", {yTransform: v => `${formatMs(v)}ms`}),
+  "lat95": makeOptions("95th Percentile Latency", {yTransform: v => `${formatMs(v)}ms`}),
+  "lat99": makeOptions("99th Percentile Latency", {yTransform: v => `${formatMs(v)}ms`}),
+  "latMax": makeOptions("Maximum Latency", {yTransform: v => `${formatMs(v)}ms`}),
+  "success": makeOptions("Successful requests", {yTransform: v => `${v} successful requests`}),
+  "failure": makeOptions("Failed requests", {yTransform: v => `${v} failed requests`}),
 };
 
 const ALL_STATS = Object.keys(CONFIG_BY_STAT);
@@ -74,7 +89,7 @@ class App extends Component {
         })
       )
     }
-    const {options: baseOptions, title} = CONFIG_BY_STAT[this.state.stat] || {};
+    const {options: baseOptions, title, valueTransform} = CONFIG_BY_STAT[this.state.stat] || {};
     const options = {
       ...baseOptions,
       axisX: {
@@ -82,27 +97,57 @@ class App extends Component {
         ticks:  rps.filter((r, i) => i % 2 === 1),
         low: 0,
         high: rps[rps.length - 1],
-      }
+      },
+      chartPadding: {
+        top: 20,
+        right: 20,
+        bottom: 30,
+        left: 40,
+      },
+      showArea: false,
+      lineSmooth: true,
+      showGridBackground: false,
+      fullWidth: false,
+      plugins: [
+        PluginTooltip({
+          valueTransform
+        }),
+        PluginAxisTitle({
+          axisX: {
+            axisTitle: 'Requests per second',
+            textAnchor: 'middle',
+            offset: {
+              x: 0,
+              y: 50,
+            },
+          },
+          axisY: {
+            axisTitle: title || this.state.stat,
+            textAnchor: 'middle',
+            flipTitle: true,
+            offset: {
+              x: 0,
+              y: 25,
+            },
+          }
+        })
+      ],
     };
         console.log(  rps.filter((r, i) => i % 2 === 1))
     return (
       <div className="App">
-        <div style={{width: '100%', height: '10vh'}}>
-          Query: <select value={this.state.query} onChange={this.handleSetQuery}>
-            {QUERIES.map(q => <option key={q} value={q}>{q}</option>)}
-          </select>{ ' ' }
-          Stat: <select value={this.state.stat} onChange={this.handleSetStat}>
-            {ALL_STATS.map(q => <option key={q} value={q}>{q}</option>)}
-          </select>
-        </div>
-        <div style={{display: 'flex', height: '90vh', alignItems: 'stretch'}}>
-          <div style={{flex: '1 0 0'}}>
-            <ChartistGraph options={options} data={
-              data
-            } type={'Line'} />
+        <div style={{width: '100%', height: '4em', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', backgroundColor: 'rgba(0, 0, 0, 0.1)'}}>
+          <div>
+            Query: <select value={this.state.query} onChange={this.handleSetQuery}>
+              {QUERIES.map(q => <option key={q} value={q}>{q}</option>)}
+            </select>
           </div>
-          <div style={{flex: '0 0 100px'}}>
-            <h3>Legend</h3>
+          <div>
+            Stat: <select value={this.state.stat} onChange={this.handleSetStat}>
+              {ALL_STATS.map(q => <option key={q} value={q}>{q}</option>)}
+            </select>
+          </div>
+          <div>
             <div className='label-postgraphile'>
               postgraphile
             </div>
@@ -112,6 +157,13 @@ class App extends Component {
             <div className='label-prisma'>
               prisma
             </div>
+          </div>
+        </div>
+        <div style={{position: 'relative', flex: '1 0 300px', display: 'flex', alignItems: 'stretch'}}>
+          <div style={{flex: '1 0 0'}}>
+            <ChartistGraph options={options} data={
+              data
+            } type={'Line'} />
           </div>
         </div>
       </div>

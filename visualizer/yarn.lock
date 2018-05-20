@@ -1370,6 +1370,18 @@ chardet@^0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
 
+chartist-plugin-axistitle@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/chartist-plugin-axistitle/-/chartist-plugin-axistitle-0.0.4.tgz#102d7b84260061292dff666b918fedc955deb144"
+
+chartist-plugin-legend@0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/chartist-plugin-legend/-/chartist-plugin-legend-0.6.2.tgz#53bf2771ddc1dc288c8abc16c151788f0b750244"
+
+chartist-plugin-tooltip@0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/chartist-plugin-tooltip/-/chartist-plugin-tooltip-0.0.11.tgz#cec2195fa505f4d34e6d8e41a86bfbcb9bfff461"
+
 chartist@0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/chartist/-/chartist-0.11.0.tgz#84ba5e05490d096d93dcfa9343ebc31ef6a3bd28"
@@ -4002,6 +4014,10 @@ jest@20.0.4:
   resolved "https://registry.yarnpkg.com/jest/-/jest-20.0.4.tgz#3dd260c2989d6dad678b1e9cc4d91944f6d602ac"
   dependencies:
     jest-cli "^20.0.4"
+
+jquery@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
 js-base64@^2.1.9:
   version "2.4.5"
