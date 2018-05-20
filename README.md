@@ -136,3 +136,18 @@ These instructions were based on the following instructions given to me by @do4g
 3. [OPTIONAL] edit bench.json with the configuration you wish to run
 4. `./bench.sh`
 5. The results are written to the `results` folder under each project's directory
+
+## Viewing the benchmark results
+
+I recommend copying the resulting files to your local computer, which you can
+do easily with rsync:
+
+`rsync -avz root@IP.ADDRESS.HERE:graphql-bench-prisma path/to/destination/`
+
+Once done, you can change into the `testcandidates` and run `node ./parser.js`
+(you may need to tweak the `dataFilter` at the top of the file if you've ran
+more than one benchmark) - this will write a `data.json` file into the
+`visualizer/src` folder.
+
+You can then change into `visualizer` and run `yarn && yarn start` - this will
+spawn a React server rendering the data.
