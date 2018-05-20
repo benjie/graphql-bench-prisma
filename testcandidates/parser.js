@@ -1,9 +1,18 @@
 const fs = require('fs');
 
+// This filter can be used to trim down the folders that we look at, in case
+// you've ran the benchmark multiple times.
+const dataFilter = r => true;
+// e.g.:
+// const dataFilter = r => r.startedAt.startsWith('2018-05-20');
+
+////////////////////////////////////////////////////////////////////////////////
+
 const isDir = fspath => n => fs.statSync(`${fspath}/${n}`).isDirectory();
 const getDirectoriesInside = fspath => fs.readdirSync(fspath).filter(isDir(fspath));
 const LINE_PARSE_REGEX = /^((?: ?\w+)+)  +\[((?: ?[a-zA-Z0-9,:]+)+)\]  +(.*)$/;
 const TIME_REGEX = /^(?:([0-9.]+)m)?(?:([0-9.]+)s)?(?:([0-9.]+)ms)?$/
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -105,7 +114,7 @@ for (const candidate of testcandidates) {
   }
 }
 
-const filteredData = allData.filter(r => r.startedAt.startsWith('2018-05-19'));
+const filteredData = allData.filter(dataFilter);
 //console.log(filteredData);
 
 const digest = {};
