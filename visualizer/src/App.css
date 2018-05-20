@@ -47,15 +47,15 @@
 .label-postgraphile,
 .series-postgraphile .ct-point,
 .series-postgraphile .ct-line {
-  stroke: red;
-  color: red;
+  stroke: purple;
+  color: purple;
 }
 
 .label-postgraphile-next,
 .series-postgraphile-next .ct-point,
 .series-postgraphile-next .ct-line {
-  stroke: green;
-  color: green;
+  stroke: #ec00e1;
+  color: #ec00e1;
 }
 
 .label-prisma,
@@ -108,4 +108,10 @@
   display: block;
   opacity: 0;
   visibility: hidden;
+}
+
+.label-postgraphile,
+.label-postgraphile-next,
+.label-prisma {
+  text-shadow: 1px 1px white;
 }
