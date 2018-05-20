@@ -16,10 +16,21 @@ function processValue(str) {
       + (parseFloat(timeMatches[2] || '0') || 0) * 1000
       + (parseFloat(timeMatches[3] || '0') || 0);
     return ms;
-  } else if (str.match(/^[0-9]+(\.[0-9]+)?|\.[0-9]+$/)) {
+  } else if (str.match(/^([0-9]+(\.[0-9]+)?|\.[0-9]+)$/)) {
     return parseFloat(str);
+  } else if (str.match(/^([0-9]{3}\:[0-9]+ ?)+$/)) {
+    const results = str.split(' ');
+    const value = results.reduce(
+      (memo, val) => {
+        const [k,v] = val.split(':');
+        memo[k] = parseInt(v, 10);
+        return memo;
+      },
+      {}
+    );
+    return value;
   } else {
-    return str
+    return str;
   };
 }
 
@@ -45,7 +56,13 @@ function parseContents(fileContents) {
           },
           {}
         );
-        data[parsed[1].trim()] = obj;
+        const key = parsed[1].trim().replace(/ [a-z]/gi, (s) => s[1].toUpperCase());
+        if (Object.keys(obj).length === 1 && Object.keys(obj)[0] === 'code:count') {
+          // Optimisation for access to status codes
+          data[key] = obj['code:count'];
+        } else {
+          data[key] = obj;
+        }
       } else if (line.match(/^Error Set:/)) {
         intoErrors = true;
       } else {
@@ -81,10 +98,12 @@ for (const candidate of testcandidates) {
         startedAt: resultFolder,
         query,
         rps,
-        data: parsedContents,
+        ...parsedContents,
       };
       allData.push(entry);
     }
   }
 }
-console.log(allData);
+
+const filteredData = allData.filter(r => r.startedAt.startsWith('2018-05-19'));
+console.log(filteredData);
