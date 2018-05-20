@@ -179,7 +179,7 @@ class App extends Component {
         </div>
         <div style={{position: 'relative', flex: '1 0 300px', display: 'flex', alignItems: 'stretch'}}>
           <div style={{flex: '1 0 0'}}>
-            <ChartistGraph options={options} data={
+            <ChartistGraph key={this.state.stat} options={options} data={
               data
             } type={'Line'} />
           </div>
