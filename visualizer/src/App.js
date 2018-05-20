@@ -101,15 +101,29 @@ class App extends Component {
       )
     }
     const {options: baseOptions, title, valueTransform, high, unit} = CONFIG_BY_STAT[this.state.stat] || {};
+    const highY = this.state.sensibleLimits ? high : undefined;
+    const highX = this.state.sensibleLimits && high
+      ? entries.reduce(
+          (biggestRps, entry) => {
+            const val = entry[this.state.stat];
+            if (val != null && val <= highY) {
+              return Math.max(biggestRps, entry.rps);
+            } else {
+              return biggestRps;
+            }
+          },
+          0
+        )
+      : rps[rps.length - 1];
     const options = {
       ...baseOptions,
       axisX: {
         ...baseOptions.axisX,
         ticks:  rps.filter((r, i) => i % 2 === 1),
         low: 0,
-        high: rps[rps.length - 1],
+        high: highX,
       },
-      high: this.state.sensibleLimits ? high : undefined,
+      high: highY,
       chartPadding: {
         top: 20,
         right: 20,
