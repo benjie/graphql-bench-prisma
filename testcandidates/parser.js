@@ -132,5 +132,7 @@ for (const entry of filteredData) {
     failure: entry.StatusCodes['0'] || 0,
   });
 }
-fs.writeFileSync(`${__dirname}/../visualizer/src/data.json`, JSON.stringify(digest, null, 2));
-console.log("Data written");
+const filename = `${__dirname}/../visualizer/src/data.json`;
+fs.writeFileSync(filename, JSON.stringify(digest, null, 2));
+console.log(`Digest data written to:`);
+console.log(`  ${filename}`);
