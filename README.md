@@ -99,6 +99,7 @@ cd project
 prisma init
 # answers:  (new database, MySQL)
 cp ../clisetup/datamodel.graphql .
+cp ../clisetup/docker-compose.yml .
 docker-compose up -d
 prisma deploy
 prisma import --data ../import/chinook.zip

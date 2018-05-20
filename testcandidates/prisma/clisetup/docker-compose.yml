@@ -16,6 +16,10 @@ services:
             port: 3306
             user: root
             password: prisma
+    logging:
+      options:
+        max-size: 50m
+        max-file: "3"
   mysql:
     container_name: mysql
     image: mysql:5.7
@@ -25,3 +29,7 @@ services:
       MYSQL_ROOT_PASSWORD: prisma
     ports:
       - "127.0.0.1:3306:3306"
+    logging:
+      options:
+        max-size: 50m
+        max-file: "3"
