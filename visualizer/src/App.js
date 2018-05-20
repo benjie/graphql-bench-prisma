@@ -8,6 +8,15 @@ import uniq from 'lodash/uniq';
 import groupBy from 'lodash/groupBy';
 
 const QUERIES = Object.keys(allData);
+const ALL_STATS = [
+  "latMean",
+  "lat50",
+  "lat95",
+  "lat99",
+  "latMax",
+  "success",
+  "failure",
+];
 
 class App extends Component {
   state = {
@@ -17,6 +26,9 @@ class App extends Component {
 
   handleSetQuery = e => {
     this.setState({query: e.target.value});
+  };
+  handleSetStat = e => {
+    this.setState({stat: e.target.value});
   };
 
   render() {
@@ -46,6 +58,9 @@ class App extends Component {
         <div style={{width: '100%', height: '10vh'}}>
           Query: <select value={this.state.query} onChange={this.handleSetQuery}>
             {QUERIES.map(q => <option key={q} value={q}>{q}</option>)}
+          </select>{ ' ' }
+          Stat: <select value={this.state.stat} onChange={this.handleSetStat}>
+            {ALL_STATS.map(q => <option key={q} value={q}>{q}</option>)}
           </select>
         </div>
         <div style={{width: '100%', height: '90vh'}}>
