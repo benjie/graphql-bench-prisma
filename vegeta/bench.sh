@@ -49,6 +49,8 @@ bench_query() {
         cp bench.json "../testcandidates/$PROGRAM_DIR/results/$BENCH_FOLDER/"
 
         if [ "$WARMUP_DURATION" != "null" ]; then
+            echo ""
+            echo ""
             echo "----------------- Warmup: $QUERY_NAME $PROGRAM_DIR $PROGRAM_URL 100Req/s ${WARMUP_DURATION}s -----------------"
             echo ""
             run_vegeta "$PROGRAM_URL" "$PROGRAM_DIR" "$QUERY_NAME" 100 "$WARMUP_DURATION" "temp/tmp.warmup" "$TIMEOUT"
