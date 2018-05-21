@@ -55,7 +55,7 @@ bench_query() {
             rm "temp/tmp.warmup"
 
             # Give the service a moment to recover before the first attack starts
-            sleep 15
+            sleep 30
         fi
 
         for RPS in $RPS_ARRAY;do

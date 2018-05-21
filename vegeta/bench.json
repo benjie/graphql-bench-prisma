@@ -1,64 +1,5 @@
 [
   {
-    "query": "prisma_deeplyNested",
-    "timeout": 5,
-    "warmup_duration": 300,
-    "duration": 60,
-    "candidates": [
-      {
-        "dir": "postgraphile",
-        "url": "http://localhost:5090/graphql"
-      },
-      {
-        "dir": "postgraphile_next",
-        "url": "http://localhost:5091/graphql"
-      },
-      {
-        "dir": "prisma",
-        "url": "http://localhost:4466"
-      }
-    ],
-    "rps": [
-      50,
-      100,
-      150,
-      200,
-      250,
-      300,
-      350,
-      400,
-      450,
-      500,
-      550,
-      600,
-      650,
-      700,
-      750,
-      800,
-      850,
-      900,
-      950,
-      1000,
-      1050,
-      1100,
-      1150,
-      1200,
-      1250,
-      1300,
-      1350,
-      1400,
-      1450,
-      1500,
-      1600,
-      1700,
-      1800,
-      1900,
-      2000,
-      2250,
-      2500
-    ]
-  },
-  {
     "query": "byArtistId",
     "timeout": 5,
     "warmup_duration": 300,
@@ -78,8 +19,69 @@
       }
     ],
     "rps": [
-      50,
       100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900,
+      1000,
+      1050,
+      1100,
+      1150,
+      1200,
+      1250,
+      1300,
+      1350,
+      1400,
+      1450,
+      1500,
+      1600,
+      1700,
+      1800,
+      1900,
+      2000,
+      2250,
+      2500,
+      2750,
+      3000,
+      3250,
+      3500,
+      4000,
+      4500,
+      5000
+    ]
+  },
+  {
+    "query": "prisma_deeplyNested",
+    "timeout": 5,
+    "warmup_duration": 300,
+    "duration": 60,
+    "candidates": [
+      {
+        "dir": "postgraphile",
+        "url": "http://localhost:5090/graphql"
+      },
+      {
+        "dir": "postgraphile_next",
+        "url": "http://localhost:5091/graphql"
+      },
+      {
+        "dir": "prisma",
+        "url": "http://localhost:4466"
+      }
+    ],
+    "rps": [
+      5,
+      10,
+      20,
+      50,
+      75,
+      100,
+      125,
       150,
       200,
       250,
@@ -107,14 +109,7 @@
       1350,
       1400,
       1450,
-      1500,
-      1600,
-      1700,
-      1800,
-      1900,
-      2000,
-      2250,
-      2500
+      1500
     ]
   },
   {
@@ -137,6 +132,11 @@
       }
     ],
     "rps": [
+      1,
+      2,
+      5,
+      10,
+      25,
       50,
       100,
       150,
@@ -196,6 +196,57 @@
       }
     ],
     "rps": [
+      1,
+      2,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100,
+      110,
+      120,
+      130,
+      140,
+      150,
+      175,
+      200
+    ]
+  },
+  {
+    "query": "tracks_media_first_20",
+    "timeout": 5,
+    "warmup_duration": 300,
+    "duration": 60,
+    "candidates": [
+      {
+        "dir": "postgraphile",
+        "url": "http://localhost:5090/graphql"
+      },
+      {
+        "dir": "postgraphile_next",
+        "url": "http://localhost:5091/graphql"
+      },
+      {
+        "dir": "prisma",
+        "url": "http://localhost:4466"
+      }
+    ],
+    "rps": [
       50,
       100,
       150,
@@ -232,7 +283,11 @@
       1900,
       2000,
       2250,
-      2500
+      2500,
+      2750,
+      3000,
+      3250,
+      3500
     ]
   }
 ]
