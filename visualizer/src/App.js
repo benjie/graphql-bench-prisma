@@ -39,11 +39,11 @@ const makeOptions = (title, o) => {
 const formatMs = ms => ms ? ms.toFixed(0) : null;
 
 const CONFIG_BY_STAT = {
-  "latMean": makeOptions("Average latency", {high: 250, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
-  "lat50": makeOptions("50th Percentile Latency", {high: 250, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
-  "lat95": makeOptions("95th Percentile Latency", {high: 250, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
-  "lat99": makeOptions("99th Percentile Latency", {high: 250, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
-  "latMax": makeOptions("Maximum Latency", {high: 250, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "latMean": makeOptions("Average latency", {high: 300, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "lat50": makeOptions("50th Percentile Latency", {high: 300, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "lat95": makeOptions("95th Percentile Latency", {high: 300, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "lat99": makeOptions("99th Percentile Latency", {high: 300, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "latMax": makeOptions("Maximum Latency", {high: 300, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
   "success": makeOptions("Successful requests", {yTransform: v => `${v} successful requests`}),
   "failure": makeOptions("Failed requests", {yTransform: v => `${v} failed requests`}),
 };
@@ -102,7 +102,7 @@ class App extends Component {
     }
     const {options: baseOptions, title, valueTransform, high, unit} = CONFIG_BY_STAT[this.state.stat] || {};
     const highY = this.state.sensibleLimits ? high : undefined;
-    const highX = this.state.sensibleLimits && high
+    const highestX = this.state.sensibleLimits && high
       ? entries.reduce(
           (biggestRps, entry) => {
             const val = entry[this.state.stat];
@@ -115,6 +115,7 @@ class App extends Component {
           0
         )
       : rps[rps.length - 1];
+    const highX = rps.find(r => r > highestX) || highestX;
     const options = {
       ...baseOptions,
       axisX: {
