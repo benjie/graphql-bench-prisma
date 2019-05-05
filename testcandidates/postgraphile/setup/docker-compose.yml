@@ -21,7 +21,7 @@ services:
     container_name: postgraphile
     restart: always
     # PostGraphile uses the --max-pool-size setting *per worker*, so 100 * 4 = 400 connections
-    command: postgraphile -c 'postgres://postgres:unsecured@postgres:5432/chinook' --host 0.0.0.0 --port 5090 --max-pool-size 100 --cluster-workers "4"
+    command: postgraphile -c 'postgres://postgres:unsecured@postgres:5432/chinook' --host 0.0.0.0 --port 5090 --max-pool-size 100 --cluster-workers "4" --disable-query-log --simple-collections only
     ports:
       - "127.0.0.1:5090:5090"
     logging:
