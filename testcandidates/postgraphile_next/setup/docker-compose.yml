@@ -2,7 +2,7 @@
 version: "3"
 services:
   postgres_next:
-    image: postgres:10.3
+    image: postgres:11-alpine
     container_name: psql_next
     restart: always
     command: postgres -c 'max_connections=500'
