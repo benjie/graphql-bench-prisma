@@ -1,2 +1,2 @@
-{"query":"query  albums_tracks_genre_all {\n  allAlbums {\n    nodes {\n      albumId\n      title\n      tracksByAlbumId {\n        nodes {\n          trackId\n          name\n          genreByGenreId {\n            name\n          }\n        }\n      }\n    }\n  }\n}\n\n","variables":null,"operationName":"albums_tracks_genre_all"}
+{"query":"query albums_tracks_genre_all {\n  allAlbumsList {\n    albumId\n    title\n    tracksByAlbumIdList {\n      trackId\n      name\n      genreByGenreId {\n        name\n      }\n    }\n  }\n}\n","variables":null,"operationName":"albums_tracks_genre_all"}
 
