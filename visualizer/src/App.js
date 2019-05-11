@@ -77,12 +77,32 @@ class App extends Component {
   listener = {
     draw(context) {
       if (context.type === 'point') {
-        const { series: { data }, index } = context;
+        const { series: { data }, index, element } = context;
         const { fill } = data[index];
         if (fill) {
-          context.element.attr({
-            style: `fill: ${fill}; stroke: ${fill}`
+          console.log(element);
+          const x = (parseFloat(element.attr('x1')) + parseFloat(element.attr('x2')))/2;
+          const y = (parseFloat(element.attr('y1')) + parseFloat(element.attr('y2')))/2;
+          const s = 11;
+          const d = `M ${x - s/2} ${y - s/2} l ${s} ${s} m -${s} 0 l ${s} -${s}`
+          const cross = element.elem('path', {
+            style: `stroke: ${fill}; stroke-width: 3px`,
+            d
           });
+          const crossBg = element.elem('path', {
+            style: `stroke: white; stroke-width: 5px`,
+            d
+          });
+          element.replace(
+            cross
+          );
+          cross._node.parentNode.insertBefore(crossBg._node, cross._node);
+          /*
+          element.attr({
+            style: `fill: ${fill}; stroke: ${fill};`,
+            r: `42px`
+          });
+          */
         }
       }
     }
