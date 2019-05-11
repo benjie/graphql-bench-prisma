@@ -74,6 +74,19 @@ class App extends Component {
     this.setState({sensibleLimits: e.target.checked});
   };
 
+  listener = {
+    draw(context) {
+      if (context.type === 'point') {
+        const { series: { data }, index } = context;
+        const { fill } = data[index];
+        if (fill) {
+          context.element.attr({
+            style: `fill: ${fill}; stroke: ${fill}`
+          });
+        }
+      }
+    }
+  }
   render() {
     const entries = allData[this.state.query];
     const rps = uniq(entries.map(e => e.rps)).sort(
@@ -91,9 +104,12 @@ class App extends Component {
             r => {
               const entry = groupedEntries[software].find(e => e.rps === r)
               if (entry) {
-                return {x: r, y: entry[this.state.stat]};
+                const successProportion = entry.success / (entry.failure + entry.success);
+                // If more than 0.1% of requests failed, show on graph
+                const fill = successProportion < 0.9999 ? 'red' : null;
+                return {x: r, y: entry[this.state.stat], fill, successProportion, meta: successProportion > 0 ? `${(successProportion * 100).toFixed(2)}% successful` : null};
               } else {
-                return {x: r, y: null};
+                return {x: r, y: null, fill: 'red', successProportion: 0};
               }
             }
           ).filter(p => p.y !== null)
@@ -160,7 +176,6 @@ class App extends Component {
         })
       ],
     };
-        console.log(  rps.filter((r, i) => i % 2 === 1))
     return (
       <div className="App">
         <div style={{width: '100%', height: '4em', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', backgroundColor: 'rgba(0, 0, 0, 0.1)'}}>
@@ -196,7 +211,7 @@ class App extends Component {
           <div style={{flex: '1 0 0'}}>
             <ChartistGraph key={this.state.stat} options={options} data={
               data
-            } type={'Line'} />
+            } type={'Line'} listener={this.listener} />
           </div>
         </div>
       </div>
