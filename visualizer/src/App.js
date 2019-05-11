@@ -39,13 +39,13 @@ const makeOptions = (title, o) => {
 const formatMs = ms => ms ? ms.toFixed(0) : null;
 
 const CONFIG_BY_STAT = {
-  "latMean": makeOptions("Average latency", {high: 300, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
-  "lat50": makeOptions("50th Percentile Latency", {high: 300, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
-  "lat95": makeOptions("95th Percentile Latency", {high: 300, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
-  "lat99": makeOptions("99th Percentile Latency", {high: 300, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
-  "latMax": makeOptions("Maximum Latency", {high: 300, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
-  "success": makeOptions("Successful requests", {yTransform: v => `${v} successful requests`}),
-  "failure": makeOptions("Failed requests", {yTransform: v => `${v} failed requests`}),
+  "latMean": makeOptions("Average latency (ms, lower is better)", {high: 1000, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "lat50": makeOptions("50th Percentile Latency (ms, lower is better)", {high: 1000, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "lat95": makeOptions("95th Percentile Latency (ms, lower is better)", {high: 1000, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "lat99": makeOptions("99th Percentile Latency (ms, lower is better)", {high: 4000, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "latMax": makeOptions("Maximum Latency (ms, lower is better)", {high: 4000, unit: 'ms', yTransform: v => `${formatMs(v)}ms`}),
+  "success": makeOptions("Successful requests (higher is better)", {yTransform: v => `${v} successful requests`}),
+  "failure": makeOptions("Failed requests (lower is better)", {yTransform: v => `${v} failed requests`}),
 };
 
 const ALL_STATS = Object.keys(CONFIG_BY_STAT);
@@ -78,24 +78,33 @@ class App extends Component {
     draw(context) {
       if (context.type === 'point') {
         const { series: { data }, index, element } = context;
-        const { fill } = data[index];
-        if (fill) {
+        const { successProportion } = data[index];
+        if (successProportion < 0.9999) {
           const x = (parseFloat(element.attr('x1')) + parseFloat(element.attr('x2')))/2;
           const y = (parseFloat(element.attr('y1')) + parseFloat(element.attr('y2')))/2;
-          const s = 11;
-          const d = `M ${x - s/2} ${y - s/2} l ${s} ${s} m -${s} 0 l ${s} -${s}`
+          const s = 9;
+          const makePath = size => `M ${x - size/2} ${y - size/2} l ${size} ${size} m -${size} 0 l ${size} -${size}`
           const cross = element.elem('path', {
-            style: `stroke: ${fill}; stroke-width: 3px`,
-            d
+            style: `stroke: red; stroke-width: 3px`,
+            d: makePath(s)
           });
           const crossBg = element.elem('path', {
             style: `stroke: white; stroke-width: 5px`,
-            d
+            d: makePath(s * 1.25)
           });
+          const text = element.elem('text', {
+            x: x - 4/5 * s,
+            y: y - s/2,
+            style: `stroke: red;`,
+            ['text-anchor']: 'end',
+            ['font-size']: '11px'
+          });
+          text._node.textContent = `${((1 - successProportion) * 100).toFixed(1)}%`;
           element._node.parentNode.insertBefore(crossBg._node, element._node);
           element._node.parentNode.insertBefore(cross._node, element._node);
+          element._node.parentNode.insertBefore(text._node, element._node);
           element.attr({
-            style: `fill: transparent; stroke: transparent`,
+            style: `successProportion: transparent; stroke: transparent`,
           });
         }
       }
@@ -120,10 +129,9 @@ class App extends Component {
               if (entry) {
                 const successProportion = entry.success / (entry.failure + entry.success);
                 // If more than 0.1% of requests failed, show on graph
-                const fill = successProportion < 0.9999 ? 'red' : null;
-                return {x: r, y: entry[this.state.stat], fill, successProportion, meta: successProportion > 0 ? `${(successProportion * 100).toFixed(2)}% successful` : null};
+                return {x: r, y: entry[this.state.stat], successProportion, meta: `${(successProportion * 100).toFixed(2)}% successful`};
               } else {
-                return {x: r, y: null, fill: 'red', successProportion: 0};
+                return {x: r, y: null, successProportion: 0};
               }
             }
           ).filter(p => p.y !== null)
@@ -171,7 +179,7 @@ class App extends Component {
         }),
         PluginAxisTitle({
           axisX: {
-            axisTitle: 'Requests per second',
+            axisTitle: 'Requests per second (larger is better)',
             textAnchor: 'middle',
             offset: {
               x: 0,
@@ -179,7 +187,7 @@ class App extends Component {
             },
           },
           axisY: {
-            axisTitle: title ? unit ? `${title} (${unit})` : title : this.state.stat,
+            axisTitle: title ? title : this.state.stat,
             textAnchor: 'middle',
             flipTitle: true,
             offset: {
@@ -221,7 +229,7 @@ class App extends Component {
             </div>
           </div>
         </div>
-        <div style={{position: 'relative', flex: '1 0 300px', display: 'flex', alignItems: 'stretch'}}>
+        <div style={{position: 'relative', flex: '1 0 300px', display: 'flex', alignItems: 'stretch', overflow: 'hidden'}}>
           <div style={{flex: '1 0 0'}}>
             <ChartistGraph key={this.state.stat} options={options} data={
               data
