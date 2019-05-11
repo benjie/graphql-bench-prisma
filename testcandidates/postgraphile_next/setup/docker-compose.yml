@@ -20,8 +20,8 @@ services:
     image: postgraphile_next:latest
     container_name: postgraphile_next
     restart: always
-    # PostGraphile uses the --max-pool-size setting *per worker*, so 133 * 3 = 399 connections
-    command: postgraphile -c 'postgres://postgres:unsecured@postgres_next:5432/chinook' --host 0.0.0.0 --port 5091 --max-pool-size 133 --cluster-workers "3" --disable-query-log --simple-collections only
+    # PostGraphile uses the --max-pool-size setting *per worker*, so 100 * 4 = 400 connections
+    command: postgraphile -c 'postgres://postgres:unsecured@postgres_next:5432/chinook' --host 0.0.0.0 --port 5091 --max-pool-size 100 --cluster-workers "4" --disable-query-log --simple-collections only
     ports:
       - "127.0.0.1:5091:5091"
     logging:
