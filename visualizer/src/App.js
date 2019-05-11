@@ -95,7 +95,7 @@ class App extends Component {
           const text = element.elem('text', {
             x: x - 4/5 * s,
             y: y - s/2,
-            style: `stroke: red;`,
+            style: `stroke: red; fill: red;`,
             ['text-anchor']: 'end',
             ['font-size']: '11px'
           });
