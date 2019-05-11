@@ -51,9 +51,9 @@ bench_query() {
         if [ "$WARMUP_DURATION" != "null" ]; then
             echo ""
             echo ""
-            echo "----------------- Warmup: $QUERY_NAME $PROGRAM_DIR $PROGRAM_URL 100Req/s ${WARMUP_DURATION}s -----------------"
+            echo "----------------- Warmup: $QUERY_NAME $PROGRAM_DIR $PROGRAM_URL 10Req/s ${WARMUP_DURATION}s -----------------"
             echo ""
-            run_vegeta "$PROGRAM_URL" "$PROGRAM_DIR" "$QUERY_NAME" 100 "$WARMUP_DURATION" "temp/tmp.warmup" "$TIMEOUT"
+            run_vegeta "$PROGRAM_URL" "$PROGRAM_DIR" "$QUERY_NAME" 10 "$WARMUP_DURATION" "temp/tmp.warmup" "$TIMEOUT"
             rm "temp/tmp.warmup"
 
             # Give the service a moment to recover before the first attack starts
