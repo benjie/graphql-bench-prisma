@@ -6,12 +6,12 @@
     "duration": 60,
     "candidates": [
       {
-        "dir": "postgraphile",
-        "url": "http://localhost:5090/graphql"
-      },
-      {
         "dir": "postgraphile_next",
         "url": "http://localhost:5091/graphql"
+      },
+      {
+        "dir": "postgraphile",
+        "url": "http://localhost:5090/graphql"
       },
       {
         "dir": "prisma",
@@ -20,35 +20,22 @@
     ],
     "rps": [
       100,
-      200,
-      300,
-      400,
       500,
-      600,
-      700,
-      800,
-      900,
       1000,
-      1050,
-      1100,
-      1150,
-      1200,
-      1250,
-      1300,
-      1350,
-      1400,
-      1450,
       1500,
-      1600,
-      1700,
-      1800,
-      1900,
       2000,
-      2250,
+      2100,
+      2200,
+      2300,
+      2400,
       2500,
-      2750,
+      2600,
+      2700,
+      2800,
+      2900,
       3000,
-      3250,
+      3100,
+      3200,
       3500,
       4000,
       4500,
@@ -62,12 +49,12 @@
     "duration": 60,
     "candidates": [
       {
-        "dir": "postgraphile",
-        "url": "http://localhost:5090/graphql"
-      },
-      {
         "dir": "postgraphile_next",
         "url": "http://localhost:5091/graphql"
+      },
+      {
+        "dir": "postgraphile",
+        "url": "http://localhost:5090/graphql"
       },
       {
         "dir": "prisma",
@@ -75,18 +62,14 @@
       }
     ],
     "rps": [
-      5,
-      10,
-      20,
       50,
       75,
       100,
       125,
       150,
+      175,
       200,
-      250,
       300,
-      350,
       400,
       450,
       500,
@@ -99,17 +82,7 @@
       850,
       900,
       950,
-      1000,
-      1050,
-      1100,
-      1150,
-      1200,
-      1250,
-      1300,
-      1350,
-      1400,
-      1450,
-      1500
+      1000
     ]
   },
   {
@@ -119,12 +92,12 @@
     "duration": 60,
     "candidates": [
       {
-        "dir": "postgraphile",
-        "url": "http://localhost:5090/graphql"
-      },
-      {
         "dir": "postgraphile_next",
         "url": "http://localhost:5091/graphql"
+      },
+      {
+        "dir": "postgraphile",
+        "url": "http://localhost:5090/graphql"
       },
       {
         "dir": "prisma",
@@ -132,40 +105,21 @@
       }
     ],
     "rps": [
-      1,
-      2,
-      5,
-      10,
-      25,
-      50,
       100,
-      150,
       200,
-      250,
       300,
-      350,
       400,
-      450,
       500,
-      550,
       600,
-      650,
       700,
-      750,
       800,
-      850,
       900,
-      950,
       1000,
-      1050,
       1100,
-      1150,
       1200,
-      1250,
       1300,
       1350,
       1400,
-      1450,
       1500,
       1600,
       1700,
@@ -179,16 +133,16 @@
   {
     "query": "albums_tracks_genre_all",
     "timeout": 5,
-    "warmup_duration": 300,
+    "warmup_duration": 1,
     "duration": 60,
     "candidates": [
       {
-        "dir": "postgraphile",
-        "url": "http://localhost:5090/graphql"
-      },
-      {
         "dir": "postgraphile_next",
         "url": "http://localhost:5091/graphql"
+      },
+      {
+        "dir": "postgraphile",
+        "url": "http://localhost:5090/graphql"
       },
       {
         "dir": "prisma",
@@ -198,32 +152,21 @@
     "rps": [
       1,
       2,
+      3,
+      4,
       5,
+      7,
       10,
       15,
       20,
       25,
       30,
-      35,
       40,
-      45,
       50,
-      55,
-      60,
-      65,
-      70,
       75,
-      80,
-      85,
-      90,
-      95,
       100,
-      110,
-      120,
-      130,
-      140,
+      125,
       150,
-      175,
       200
     ]
   },
@@ -234,12 +177,12 @@
     "duration": 60,
     "candidates": [
       {
-        "dir": "postgraphile",
-        "url": "http://localhost:5090/graphql"
-      },
-      {
         "dir": "postgraphile_next",
         "url": "http://localhost:5091/graphql"
+      },
+      {
+        "dir": "postgraphile",
+        "url": "http://localhost:5090/graphql"
       },
       {
         "dir": "prisma",
@@ -247,47 +190,33 @@
       }
     ],
     "rps": [
-      50,
       100,
-      150,
-      200,
-      250,
-      300,
-      350,
-      400,
-      450,
-      500,
-      550,
-      600,
-      650,
-      700,
-      750,
-      800,
-      850,
-      900,
-      950,
       1000,
-      1050,
-      1100,
-      1150,
       1200,
-      1250,
-      1300,
-      1350,
       1400,
-      1450,
-      1500,
       1600,
-      1700,
       1800,
-      1900,
       2000,
+      2050,
+      2100,
+      2150,
+      2200,
       2250,
+      2300,
+      2350,
+      2400,
+      2450,
       2500,
-      2750,
+      2600,
+      2700,
+      2800,
       3000,
       3250,
-      3500
+      3500,
+      4000,
+      4500,
+      5000,
+      6000
     ]
   }
 ]
