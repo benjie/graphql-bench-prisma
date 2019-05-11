@@ -80,7 +80,6 @@ class App extends Component {
         const { series: { data }, index, element } = context;
         const { fill } = data[index];
         if (fill) {
-          console.log(element);
           const x = (parseFloat(element.attr('x1')) + parseFloat(element.attr('x2')))/2;
           const y = (parseFloat(element.attr('y1')) + parseFloat(element.attr('y2')))/2;
           const s = 11;
@@ -93,16 +92,11 @@ class App extends Component {
             style: `stroke: white; stroke-width: 5px`,
             d
           });
-          element.replace(
-            cross
-          );
-          cross._node.parentNode.insertBefore(crossBg._node, cross._node);
-          /*
+          element._node.parentNode.insertBefore(crossBg._node, element._node);
+          element._node.parentNode.insertBefore(cross._node, element._node);
           element.attr({
-            style: `fill: ${fill}; stroke: ${fill};`,
-            r: `42px`
+            style: `fill: transparent; stroke: transparent`,
           });
-          */
         }
       }
     }
