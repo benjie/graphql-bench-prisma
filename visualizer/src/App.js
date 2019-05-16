@@ -40,17 +40,17 @@ const formatMs = ms => (ms ? ms.toFixed(0) : null);
 
 const CONFIG_BY_STAT = {
   latMean: makeOptions("Average latency (ms, lower is better)", {
-    high: 1000,
+    high: 300,
     unit: "ms",
     yTransform: v => `${formatMs(v)}ms`
   }),
   lat50: makeOptions("50th Percentile Latency (ms, lower is better)", {
-    high: 1000,
+    high: 300,
     unit: "ms",
     yTransform: v => `${formatMs(v)}ms`
   }),
   lat95: makeOptions("95th Percentile Latency (ms, lower is better)", {
-    high: 1000,
+    high: 500,
     unit: "ms",
     yTransform: v => `${formatMs(v)}ms`
   }),
@@ -65,9 +65,11 @@ const CONFIG_BY_STAT = {
     yTransform: v => `${formatMs(v)}ms`
   }),
   success: makeOptions("Successful requests (higher is better)", {
+    hideFailureCount: true,
     yTransform: v => `${v} successful requests`
   }),
   failure: makeOptions("Failed requests (lower is better)", {
+    hideFailureCount: true,
     yTransform: v => `${v} failed requests`
   })
 };
@@ -78,7 +80,7 @@ class App extends Component {
   state = {
     query: QUERIES[0],
     stat: "lat95",
-    smoothed: true,
+    smoothed: false,
     sensibleLimits: true
   };
 
@@ -99,49 +101,61 @@ class App extends Component {
   };
 
   listener = {
-    draw(context) {
+    draw: context => {
       if (context.type === "point") {
+        const config = CONFIG_BY_STAT[this.state.stat] || {};
         const {
           series: { data },
           index,
           element
         } = context;
         const { successProportion } = data[index];
-        if (successProportion < 0.9999) {
+        if (successProportion < 0.999) {
           const x =
             (parseFloat(element.attr("x1")) + parseFloat(element.attr("x2"))) /
             2;
           const y =
             (parseFloat(element.attr("y1")) + parseFloat(element.attr("y2"))) /
             2;
-          const s = 9;
+          const s = 6;
           const makePath = size =>
             `M ${x - size / 2} ${y -
               size / 2} l ${size} ${size} m -${size} 0 l ${size} -${size}`;
           const cross = element.elem("path", {
-            style: `stroke: red; stroke-width: 3px`,
+            style: `stroke: red; stroke-width: 2px`,
             d: makePath(s)
           });
           const crossBg = element.elem("path", {
-            style: `stroke: white; stroke-width: 5px`,
+            style: `stroke: white; stroke-width: 3.5px`,
             d: makePath(s * 1.25)
           });
-          const text = element.elem("text", {
-            x: x - (4 / 5) * s,
-            y: y - s / 2,
-            style: `stroke: red; fill: red;`,
-            ["text-anchor"]: "end",
-            ["font-size"]: "11px"
-          });
-          text._node.textContent = `${((1 - successProportion) * 100).toFixed(
-            1
-          )}%`;
-          element._node.parentNode.insertBefore(crossBg._node, element._node);
-          element._node.parentNode.insertBefore(cross._node, element._node);
-          element._node.parentNode.insertBefore(text._node, element._node);
-          element.attr({
-            style: `successProportion: transparent; stroke: transparent`
-          });
+          const makeText = bg => {
+            const color = bg ? "white" : "red";
+            const el = element.elem("text", {
+              x,
+              y: y - (4 / 5) * s,
+              style: `stroke: ${color}; fill: ${color};`,
+              ["text-anchor"]: "middle",
+              ["font-size"]: "9px",
+              ["font-weight"]: "bold",
+              ["stroke-width"]: bg ? "2px" : "0px"
+            });
+            el._node.textContent = `${((1 - successProportion) * 100).toFixed(
+              1
+            )}%`;
+            return el;
+          };
+          const textBg = makeText(true);
+          const text = makeText();
+          if (!config.hideFailureCount) {
+            element._node.parentNode.insertBefore(crossBg._node, element._node);
+            element._node.parentNode.insertBefore(cross._node, element._node);
+            element._node.parentNode.insertBefore(textBg._node, element._node);
+            element._node.parentNode.insertBefore(text._node, element._node);
+            element.attr({
+              style: `fill: transparent; stroke: transparent`
+            });
+          }
         }
       }
     }
